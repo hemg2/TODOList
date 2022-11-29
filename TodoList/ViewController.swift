@@ -123,7 +123,6 @@ extension ViewController: UITableViewDataSource {
 
 
 extension ViewController: UITableViewDelegate {
-    // 체크
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var task = self.tasks[indexPath.row]
         task.done = !task.done

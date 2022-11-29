@@ -58,6 +58,7 @@
 		63913D922935C0C5005D02F2 /* TodoList */ = {
 			isa = PBXGroup;
 			children = (
+				63913DD829363B4D005D02F2 /* Model */,
 				63913D932935C0C5005D02F2 /* AppDelegate.swift */,
 				63913D952935C0C5005D02F2 /* SceneDelegate.swift */,
 				63913D972935C0C5005D02F2 /* ViewController.swift */,
@@ -65,9 +66,16 @@
 				63913D9C2935C0C7005D02F2 /* Assets.xcassets */,
 				63913D9E2935C0C7005D02F2 /* LaunchScreen.storyboard */,
 				63913DA12935C0C7005D02F2 /* Info.plist */,
-				63913DA72935C30B005D02F2 /* Task.swift */,
 			);
 			path = TodoList;
+			sourceTree = "<group>";
+		};
+		63913DD829363B4D005D02F2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				63913DA72935C30B005D02F2 /* Task.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
