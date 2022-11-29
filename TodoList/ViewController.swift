@@ -12,6 +12,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableVIew: UITableView!
     @IBOutlet var editButton: UIBarButtonItem!
     var doneButton : UIBarButtonItem?
+    
+    //할일 저장하는 배열
     var tasks = [Task]() {
         didSet {
             self.saveTasks()
@@ -23,6 +25,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.tableVIew.dataSource = self
         self.tableVIew.delegate = self
+        self.loadTasks()
         self.doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTap))
     }
     
@@ -95,12 +98,14 @@ extension ViewController: UITableViewDataSource {
         return cell
     }
     
+   
     
 }
 
 
 
 extension ViewController: UITableViewDelegate {
+    // 체크
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var task = self.tasks[indexPath.row]
         task.done = !task.done
