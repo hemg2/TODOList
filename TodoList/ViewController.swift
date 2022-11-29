@@ -8,12 +8,12 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    @IBOutlet weak var tableVIew: UITableView!
+    
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet var editButton: UIBarButtonItem!
     var doneButton : UIBarButtonItem?
     
-    //할일 저장하는 배열
+    
     var tasks = [Task]() {
         didSet {
             self.saveTasks()
@@ -23,19 +23,22 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableVIew.dataSource = self
-        self.tableVIew.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
         self.loadTasks()
         self.doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTap))
     }
     
-    @objc func doneButtonTap(_ sender: UIBarButtonItem) {
-        guard !self.tasks.isEmpty else { return }
+    @objc func doneButtonTap() {
         self.navigationItem.leftBarButtonItem = self.editButton
+        self.tableView.setEditing(false, animated: true)
         
     }
-
+    
     @IBAction func tapEditButton(_ sender: Any) {
+        guard !self.tasks.isEmpty else { return }
+        self.navigationItem.leftBarButtonItem = self.doneButton
+        self.tableView.setEditing(true, animated: true)
     }
     
     
@@ -45,7 +48,7 @@ class ViewController: UIViewController {
             guard let title = alert.textFields?[0].text else { return }
             let task = Task(title: title, done: false)
             self?.tasks.append(task)
-            self?.tableVIew.reloadData()
+            self?.tableView.reloadData()
         })
         let cancelButton = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(cancelButton)
@@ -94,14 +97,29 @@ extension ViewController: UITableViewDataSource {
         } else {
             cell.accessoryType = .none
         }
-        
         return cell
     }
     
-   
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        self.tasks.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        
+        if self.tasks.isEmpty {
+            self.doneButtonTap()
+        }
+    }
     
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        var tasks = self.tasks
+        let task = tasks[sourceIndexPath.row]
+        tasks.remove(at: sourceIndexPath.row)
+        tasks.insert(task, at: destinationIndexPath.row)
+        self.tasks = tasks
+    }
 }
-
 
 
 extension ViewController: UITableViewDelegate {
@@ -110,6 +128,6 @@ extension ViewController: UITableViewDelegate {
         var task = self.tasks[indexPath.row]
         task.done = !task.done
         self.tasks[indexPath.row] = task
-        self.tableVIew.reloadRows(at: [indexPath], with: .automatic)
+        self.tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }

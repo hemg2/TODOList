@@ -63,7 +63,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="editButton" destination="U5h-gX-RuX" id="vMf-Cg-xGT"/>
-                        <outlet property="tableVIew" destination="3Dl-Rd-OX0" id="mRY-d9-Syb"/>
+                        <outlet property="tableView" destination="3Dl-Rd-OX0" id="mRY-d9-Syb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
